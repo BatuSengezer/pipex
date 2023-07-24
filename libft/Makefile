@@ -6,7 +6,7 @@
 #    By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:30:24 by bsengeze          #+#    #+#              #
-#    Updated: 2023/07/02 22:14:20 by bsengeze         ###   ########.fr        #
+#    Updated: 2023/07/23 20:49:23 by bsengeze         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@ $(INCS)
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME):	$(OBJS) $(HDRS)
 			$(LIB) $(NAME) $(OBJS)
