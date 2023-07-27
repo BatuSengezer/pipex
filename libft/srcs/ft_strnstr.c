@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bsengeze <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 00:40:22 by bsengeze          #+#    #+#             */
-/*   Updated: 2022/12/20 19:12:34 by bsengeze         ###   ########.fr       */
+/*   Updated: 2023/07/26 21:50:39 by bsengeze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// Locates the first occurrence of the null-terminated string little in the 
+// big string, where not more than len characters are searched.  Characters 
+// that appear after a ‘\0’ character are not searched.
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;

@@ -6,7 +6,7 @@
 #    By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/14 16:30:24 by bsengeze          #+#    #+#              #
-#    Updated: 2023/07/23 20:49:23 by bsengeze         ###   ########.fr        #
+#    Updated: 2023/07/27 15:32:35 by bsengeze         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,10 @@ LIB = ar -rcs
 RM	 = /bin/rm -f
 
 NAME = libft.a
-HDRS = libft.h
+HDRS = ./include/libft.h
+SRC_DIR = srcs/
 OBJ_DIR = objs/
+INCLUDE = -I./include
 
 SRCS = 	ft_isalpha.c ft_isdigit.c ft_issign.c ft_isalnum.c ft_isascii.c \
 		ft_isprint.c ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c \
@@ -30,23 +32,23 @@ SRCS = 	ft_isalpha.c ft_isdigit.c ft_issign.c ft_isalnum.c ft_isascii.c \
 		ft_putnbr_fd.c ft_putchar.c ft_putstr.c \
 		get_next_line.c get_next_line_utils.c
 
-OBJ	= $(SRCS:.c=.o)
-OBJS = $(addprefix $(OBJ_DIR), $(OBJ))
+SRC	= $(addprefix $(SRC_DIR), $(SRCS))
+OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 
 all:	$(OBJ_DIR)	$(NAME)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME):	$(OBJS) $(HDRS)
-			$(LIB) $(NAME) $(OBJS)
+$(NAME):	$(OBJ) $(HDRS)
+			$(LIB) $(NAME) $(OBJ)
 
 clean:
 		rm -rf $(OBJ_DIR)
-		$(RM) $(OBJS)
+		$(RM) $(OBJ)
 
 fclean:	clean
 		$(RM) $(NAME)	
