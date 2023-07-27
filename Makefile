@@ -2,13 +2,13 @@ NAME = pipex
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror
 LIBFT = ./libft/libft.a
-INCLUDE = -I./include
+INCLUDE = -I./include -I./libft/include
 GREEN   = \033[32;1m
 RESET	= \033[0m
 SRC_DIR = srcs/
 OBJ_DIR = objs/
 
-SRCS =	pipex.c
+SRCS =	pipex.c utils.c
 
 SRC	= $(addprefix $(SRC_DIR), $(SRCS))
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
