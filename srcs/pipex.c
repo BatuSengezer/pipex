@@ -6,7 +6,7 @@
 /*   By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 22:03:24 by bsengeze          #+#    #+#             */
-/*   Updated: 2023/07/27 14:23:02 by bsengeze         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:54:09 by bsengeze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,28 @@
 // It also duplicates read end of the pipe to STDIN fd, redirecting input of
 // the child process to make sure it is received from infile(argv[1]).
 // Then executes the command(argv[2]).
-void child_process (char **argv,char **envp, int *fd)
+void	child_process(char **argv, char **envp, int *fd)
 {
-	int infile;
+	int	infile;
 
-	infile = open(argv[1], O_RDONLY, 0777); // check the alternatives of 0777(to readonly)
+	infile = open(argv[1], O_RDONLY, 0777);
 	if (infile == -1)
 		error_exit();
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(infile, STDIN_FILENO);
 	execute(argv[2], envp);
-
 }
 
 // Parent process that duplicates the read end of the pipe to STDIN fd,
 // redirecting any input from STDIN to make sure it is taken from the
 // read end of the pipe which is written by the child process.
-// It also duplicates fd of the outfile(argv[4]) to STDOUT fd, redirecting output
-// of the parent process to make sure it is written to the output file.
+// It also duplicates fd of the outfile(argv[4]) to STDOUT fd, redirecting 
+// output of the parent process to make sure it is written to the output file.
 // Then executes the command(argv[3]).
-void parent_process (char **argv,char **envp, int *fd)
+void	parent_process(char **argv, char **envp, int *fd)
 {
-	int outfile;
+	int	outfile;
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (outfile == -1)
@@ -50,14 +49,14 @@ void parent_process (char **argv,char **envp, int *fd)
 	execute(argv[3], envp);
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	int fd[2];
-	pid_t pid;
+	int		fd[2];
+	pid_t	pid;
 
 	if (argc == 5)
 	{
-		if(pipe (fd) == -1)
+		if (pipe(fd) == -1)
 			error_exit();
 		pid = fork();
 		if (pid == -1)
@@ -66,8 +65,8 @@ int main(int argc, char **argv, char **envp)
 			child_process(argv, envp, fd);
 		else
 		{
-		waitpid(pid, NULL, 0);
-		parent_process(argv, envp, fd);
+			waitpid(pid, NULL, 0);
+			parent_process(argv, envp, fd);
 		}
 	}
 	else
@@ -77,36 +76,3 @@ int main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-
-
-
-
-
-
-
-// // test main
-
-// #include <errno.h>
-// int main (int ac, char **av)
-// {
-// 	errno = EACCES;
-
-// 	if (strcmp(av[1], "HELLO") == 0)
-// 		printf ("%s", av[1]);
-// 	else	
-// 		error_exit();
-// }
-
-
-// // program that prints environment variables
-// #include <stdio.h>
-
-// int main(int argc, char **argv, char **envp) {
-//     // Access and print environment variables
-//     for (int i = 0; envp[i] != NULL; i++) {
-//         printf("envp[%d]: %s\n", i, envp[i]);
-//     }
-
-//     return 0;
-// }
