@@ -20,5 +20,6 @@
 void	error_exit(void);
 void	execute(char *argv, char **envp);
 char	*path_finder(char *cmd, char **envp);
+char **cmd_arg_parser(char *argv);
 
 #endif

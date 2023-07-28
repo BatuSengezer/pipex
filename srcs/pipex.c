@@ -12,10 +12,10 @@
 
 #include "pipex.h"
 
-// Child process that duplicates the write end of the pipe to STDOUT fd,
-// redirecting any output to STDOUT making it available for parent process.
-// It also duplicates read end of the pipe to STDIN fd, redirecting input of
-// the child process to make sure it is received from infile(argv[1]).
+// Child process that duplicates read end of the pipe to STDIN fd, redirecting
+// input of the child process to make sure it is received from infile(argv[1]).
+// It also duplicates the write end of the pipe to STDOUT fd, redirecting
+// any output to STDOUT making it available for parent process.
 // Then executes the command(argv[2]).
 void	child_process(char **argv, char **envp, int *fd)
 {
@@ -25,8 +25,8 @@ void	child_process(char **argv, char **envp, int *fd)
 	if (infile == -1)
 		error_exit();
 	close(fd[0]);
-	dup2(fd[1], STDOUT_FILENO);
 	dup2(infile, STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
 	execute(argv[2], envp);
 }
 
