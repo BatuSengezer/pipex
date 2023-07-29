@@ -6,7 +6,7 @@
 /*   By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:49:41 by bsengeze          #+#    #+#             */
-/*   Updated: 2023/07/27 15:49:54 by bsengeze         ###   ########.fr       */
+/*   Updated: 2023/07/29 15:35:30 by bsengeze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,13 @@ void	execute(char *argv, char **envp)
 	int		i;
 
 	i = 0;
-	// cmd = ft_split(argv, ' ');
-		printf("%s", argv);
-	cmd = cmd_arg_parser(argv);
+	while (argv[i] != '\'' && argv[i])
+		i++;
+	if (argv[i] == '\'' && argv[ft_strlen(argv) - 1] == '\'')
+		cmd = cmd_with_single_quotes_parser(argv);
+	else
+		cmd = ft_split(argv, ' ');
+	i = 0;
 	path = path_finder(cmd[0], envp);
 	if (!path)
 	{
@@ -42,7 +46,7 @@ void	execute(char *argv, char **envp)
 		error_exit();
 }
 
-char **cmd_arg_parser(char *argv)
+char **cmd_with_single_quotes_parser(char *argv)
 {
 	char **ret;
 	int i;
@@ -51,21 +55,12 @@ char **cmd_arg_parser(char *argv)
 	if (!ret)
 		return (NULL);
 	i = 0;
-	while (argv[i])
-	{
-		while(argv[i] != ' ' && argv[i])
-			i++;
-		ret[0] = ft_substr(argv, 0, i);
-		printf("%s", ret[0]);
-		if (argv[i])
-		{
-			i++;
-			ret[1] = ft_substr(argv, i, ft_strlen(argv) - i);
-			ret[2] = 0;
-		}
-		else
-			ret[1] = 0;
-	}
+	while(argv[i] != ' ' && argv[i])
+		i++;
+	ret[0] = ft_substr(argv, 0, i);
+	i += 2;
+	ret[1] = ft_substr(argv, i, ft_strlen(argv) - i - 1);
+	ret[2] = 0;
 	return (ret);
 }
 

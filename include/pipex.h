@@ -6,7 +6,7 @@
 /*   By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:06:33 by bsengeze          #+#    #+#             */
-/*   Updated: 2023/07/27 15:44:13 by bsengeze         ###   ########.fr       */
+/*   Updated: 2023/07/29 15:17:00 by bsengeze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@
 void	error_exit(void);
 void	execute(char *argv, char **envp);
 char	*path_finder(char *cmd, char **envp);
-char **cmd_arg_parser(char *argv);
+char    **cmd_with_single_quotes_parser(char *argv);
 
 #endif
