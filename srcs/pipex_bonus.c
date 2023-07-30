@@ -56,9 +56,11 @@ void	here_doc(char *limiter, int argc)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		while (get_next_line_pipex(&line))
+		while (get_next_line(fd[0]) != limiter)
 		{
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+			write(1, "pipe heredoc> ", 15);
+			line = get_next_line(0);
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && ft_strlen(limiter) == ft_strlen(line) -1)
 				exit(EXIT_SUCCESS);
 			write(fd[1], line, ft_strlen(line));
 		}
