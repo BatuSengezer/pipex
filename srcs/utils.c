@@ -6,7 +6,7 @@
 /*   By: bsengeze <bsengeze@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:49:41 by bsengeze          #+#    #+#             */
-/*   Updated: 2023/07/29 15:35:30 by bsengeze         ###   ########.fr       */
+/*   Updated: 2023/07/29 22:05:56 by bsengeze         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ void	execute(char *argv, char **envp)
 		error_exit();
 }
 
-char **cmd_with_single_quotes_parser(char *argv)
+char	**cmd_with_single_quotes_parser(char *argv)
 {
-	char **ret;
-	int i;
+	char	**ret;
+	int		i;
 
 	ret = malloc(sizeof(char *) * 3);
 	if (!ret)
 		return (NULL);
 	i = 0;
-	while(argv[i] != ' ' && argv[i])
+	while (argv[i] != ' ' && argv[i])
 		i++;
 	ret[0] = ft_substr(argv, 0, i);
 	i += 2;
