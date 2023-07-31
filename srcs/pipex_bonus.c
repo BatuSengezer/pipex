@@ -20,7 +20,6 @@ void	wrong_input(void)
 	exit(EXIT_FAILURE);
 }
 
-// Function to open the files with the right flags 
 int	open_file(char *argv, int i)
 {
 	int	file;
@@ -37,9 +36,9 @@ int	open_file(char *argv, int i)
 	return (file);
 }
 
-// Child process that create a fork and a pipe, put the output inside a pipe
-// and then close with the exec function. The main process will change his 
-// stdin for the pipe file descriptor.
+// Creates a pipe and fork. Child process receives input from the parent,
+// redirects output to the write end of the pipe and executes the command.
+// Parent process reads what was written to write end of the pipe by the child.
 void	new_process(char *argv, char **envp)
 {
 	pid_t	pid;
@@ -64,9 +63,6 @@ void	new_process(char *argv, char **envp)
 	}
 }
 
-// Function who make a child process that will read from the stdin with
-// get_next_line until it find the limiter word and then put the output inside
-// a pipe. The main process will change his stdin for the pipe file descriptor.
 void	here_doc(char *limiter, int argc)
 {
 	pid_t	pid;
@@ -81,27 +77,21 @@ void	here_doc(char *limiter, int argc)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		while (get_next_line(fd[0]) != limiter)
+		line = NULL;
+		while (line != limiter)
 		{
-			write(1, "pipe heredoc> ", 15);
 			line = get_next_line(0);
 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && 
-				ft_strlen(limiter) == ft_strlen(line) -1 )
+				ft_strlen(limiter) == ft_strlen(line) - 1)
 				exit(EXIT_SUCCESS);
 			write(fd[1], line, ft_strlen(line));
 		}
 	}
-	else
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		wait(NULL);
-	}
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	wait(NULL);
 }
 
-// Main function that run the childs process with the right file descriptor
-// or display an error message if arguments are wrong. It will run here_doc
-// function if the "here_doc" string is find in argv[1]. 
 int	main(int argc, char **argv, char **envp)
 {
 	int	i;
