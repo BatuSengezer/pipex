@@ -12,6 +12,31 @@
 
 #include "pipex.h"
 
+void	wrong_input(void)
+{
+	ft_putstr_fd("Error: Invalid arguments..Correct arguments are:\n", 2);
+	ft_putstr_fd("./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
+	ft_putstr_fd("./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <file>\n", 1);
+	exit(EXIT_FAILURE);
+}
+
+// Function to open the files with the right flags 
+int	open_file(char *argv, int i)
+{
+	int	file;
+
+	file = 0;
+	if (i == 0)
+		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	else if (i == 1)
+		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else if (i == 2)
+		file = open(argv, O_RDONLY, 0777);
+	if (file == -1)
+		error_exit();
+	return (file);
+}
+
 // Child process that create a fork and a pipe, put the output inside a pipe
 // and then close with the exec function. The main process will change his 
 // stdin for the pipe file descriptor.
@@ -60,7 +85,8 @@ void	here_doc(char *limiter, int argc)
 		{
 			write(1, "pipe heredoc> ", 15);
 			line = get_next_line(0);
-			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && ft_strlen(limiter) == ft_strlen(line) -1)
+			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && 
+				ft_strlen(limiter) == ft_strlen(line) -1 )
 				exit(EXIT_SUCCESS);
 			write(fd[1], line, ft_strlen(line));
 		}

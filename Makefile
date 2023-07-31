@@ -25,7 +25,7 @@ SRCS = pipex.c utils.c
 SRC	= $(addprefix $(SRC_DIR), $(SRCS))
 OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.c=.o)))
 
-SRCS_BONUS = pipex_bonus.c utils_bonus.c utils.c
+SRCS_BONUS = pipex_bonus.c utils.c
 SRC_BONUS = $(addprefix $(SRC_DIR), $(SRCS_BONUS))
 OBJ_BONUS = $(addprefix $(OBJ_DIR), $(notdir $(SRC_BONUS:.c=.o)))
 
