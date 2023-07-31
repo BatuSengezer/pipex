@@ -63,6 +63,8 @@ void	new_process(char *argv, char **envp)
 	}
 }
 
+// Reads from the stdin and if line is not limiter, writes it to the
+// write end of the pipe so that can parent process read it.
 void	here_doc(char *limiter, int argc)
 {
 	pid_t	pid;
