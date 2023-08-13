@@ -9,8 +9,8 @@ Program behaves exactly the same as "< file1 cmd1 | cmd2 > file2".
 make && ./pipex file1 cmd1 cmd2 file2
 ```
 
-The bonus part handles multiple pipes as in shell command "< file1 cmd1 | cmd2 | cmd3 ... | cmdn > file2". \ 
-Also it handles "<<" and">>" when the first argument is here_doc as in shell command "cmd << LIMITER | cmd1 >> file".
+The bonus part handles multiple pipes as in shell command "< file1 cmd1 | cmd2 | cmd3 ... | cmdn > file2".\
+It also handles "<<" and">>" when the first argument is here_doc as in shell command "cmd << LIMITER | cmd1 >> file".
 ### You can run bonus part as :
 ```zsh
 # terminal
