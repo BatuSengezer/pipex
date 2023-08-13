@@ -2,7 +2,7 @@
 
 A program that mimics "|" (pipe) operator in shell. It reads from a file (file1), executes the command (cmd1) and writes that output as an input to the next command (cmd2). Then writes output of the next command to the outfile(file2).
 
-Program behaves exactly the same as "< file1 cmd1 | cmd2 > file2".
+Program behaves exactly the same as shell command "< file1 cmd1 | cmd2 > file2".
 ### You can run it as :
 ```zsh
 # terminal
