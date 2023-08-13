@@ -15,6 +15,9 @@ It also handles "<<" and">>" when the first argument is here_doc as in shell com
 ```zsh
 # terminal
 make bonus &&  ./pipex_bonus file1 cmd1 cmd2 cmd3 ... cmdn file2
+```
 OR
+```zsh
+# terminal
 make bonus && ./pipex_bonus here_doc LIMITER cmd cmd1 file
 ```
