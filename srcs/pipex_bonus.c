@@ -80,7 +80,7 @@ void	here_doc(char *limiter, int argc)
 	{
 		close(fd[0]);
 		line = NULL;
-		while (line != limiter)
+		while (1)
 		{
 			line = get_next_line(0);
 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0 && 
